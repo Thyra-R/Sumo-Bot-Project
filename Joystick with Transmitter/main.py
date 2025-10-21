@@ -81,15 +81,15 @@ def handle_button_press(button):
     led_states[button] = not led_states[button]
 
     if button == BUTTON_A:  # right
-        set_led(Pin(LED_1_PIN, Pin.OUT), led_states[button])
+        set_led(Pin(LED_3_PIN, Pin.OUT), led_states[button])
         transmitter.transmit(device_addr, 0x04)
         print("COMMANDS", hex(0x04), "TRANSMITTED.")
     elif button == BUTTON_B:  # back
         set_led(Pin(LED_2_PIN, Pin.OUT), led_states[button])
         transmitter.transmit(device_addr, 0x02)
         print("COMMANDS", hex(0x02), "TRANSMITTED.")
-    elif button == BUTTON_X:  # forwards
-        set_led(Pin(LED_3_PIN, Pin.OUT), led_states[button])
+    elif button == BUTTON_X:  # forward
+        set_led(Pin(LED_1_PIN, Pin.OUT), led_states[button])
         print("Button X")
         transmitter.transmit(device_addr, 0x01)
         print("COMMANDS", hex(0x01), "TRANSMITTED.")
