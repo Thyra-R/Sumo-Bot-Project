@@ -1,11 +1,7 @@
 import math, time
-
-#import ir_rx
 import machine
 from machine import PWM
 from machine import Pin
-#from ir_rx.nec import NEC_8 # Use the NEC 8-bit class
-#from ir_rx.print_error import print_error # for debugging
 
 time.sleep(1) # Wait for USB to become ready
 
@@ -19,16 +15,6 @@ motSPD2 = PWM(15, freq = pwm_rate, duty_u16 = 0)
 
 #Setting pwm
 pwm = min(max(int(2**16 * abs(1)), 0), 65535)
-
-#Interrupt
-def ir_callback(data, addr, _):
-    print(f"Received NEC command! Data: 0x{data:02X}, Addr: 0x{addr:02X}")
-
-# Setup the IR receiver
-#ir_pin = Pin(17, Pin.IN, Pin.PULL_UP) # Adjust the
-#ir_receiver = NEC_8(ir_pin, callback=ir_callback)
-
-#ir_receiver.error_function(print_error)
 
 while True:
     #Setting motors to drive forward
