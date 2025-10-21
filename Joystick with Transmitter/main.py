@@ -78,7 +78,6 @@ def set_led(pin, state):
 def handle_button_press(button):
     """Toggle the corresponding LED state on button press."""
     global led_states
-    led_states[button] = not led_states[button]
 
     if button == BUTTON_A:  # right
         set_led(Pin(LED_3_PIN, Pin.OUT), led_states[button])
@@ -100,6 +99,7 @@ def handle_button_press(button):
         print("COMMANDS", hex(0x03), "TRANSMITTED.")
 
     print("Button", button, "is", "pressed" if led_states[button] else "released")
+    led_states[button] = not led_states[button]
 
 
 def main():
@@ -116,7 +116,7 @@ def main():
 
         # Check if button state has changed
         for button in led_states:
-            if current_buttons & (1 << button) and not last_buttons & (1 << button):
+            if current_buttons & (1 << button) != last_buttons & (1 << button):
                 handle_button_press(button)
 
         # Read joystick values
@@ -154,6 +154,9 @@ def main():
             set_led(Pin(LED_4_PIN, Pin.OUT), True)
             transmitter.transmit(device_addr, 0x04)
             print("COMMANDS", hex(0x04), "TRANSMITTED.")
+        else:
+            transmitter.transmit(device_addr, 0x05)
+            print("COMMANDS", hex(0x05), "TRANSMITTED.")
 
         last_buttons = current_buttons
         time.sleep(0.1)
